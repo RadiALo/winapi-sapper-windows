@@ -411,6 +411,10 @@ INT_PTR CALLBACK Win(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
 
 // Функція, що розраховує параметри малюваня
 void RecalcStartPos(HWND hWnd) {
+    if (difficult < 0) {
+        difficult = 0;
+    }
+
     RECT winRect;
     GetWindowRect(hWnd, &winRect);
     int lowest = winRect.right - winRect.left > winRect.bottom - winRect.top ? winRect.bottom - winRect.top : winRect.right - winRect.left;
@@ -731,6 +735,7 @@ void WriteGame() {
     file.lpstrInitialDir = NULL;
     file.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
     DWORD dwCounter;
+
     if (GetSaveFileNameA(&file))  {
         HANDLE openedFile = CreateFile(filename, GENERIC_WRITE, 0, NULL,
             CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
